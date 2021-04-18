@@ -19,7 +19,7 @@ public class WebProxy {
         this.cache = cache;
     }
 
-    public WebPage fetch(String url) throws CacheMissException, IOException {
+    public WebPage fetch(String url) throws IOException {
         try {
             WebPage site = cache.readFromCache(url);
             if (site != null) {

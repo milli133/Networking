@@ -28,7 +28,7 @@ public class URLLoader {
             } catch (IOException e) {
                 System.out.println("Something went wrong while loading the webpage...");
             }
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
