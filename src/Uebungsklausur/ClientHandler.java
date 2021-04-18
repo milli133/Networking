@@ -37,7 +37,8 @@ public class ClientHandler implements Runnable {
                         case "fetch", "Fetch":
                             try {
                                 answer = wp.fetch(param).getContent();
-                            } catch (CacheMissException e) {
+                            } catch (Exception e) {
+                                answer = "Error: Cannot load webpage from URL";
                                 System.out.println(e.getMessage()); }
                             break;
                         case "stats", "Stats":

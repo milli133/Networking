@@ -10,26 +10,27 @@ public class URLLoader {
 
     public static WebPage loadWebPage(String url) throws IOException {
 
-        BufferedReader reader = null;
+        BufferedReader reader;
 
         try {
             URL site = new URL(url);
 
             try {
                 reader = new BufferedReader(new InputStreamReader(site.openStream()));
+
+
+                String input, output = "";
+                while ((input = reader.readLine()) != null) {
+                    output = output.concat(input);
+                }
+
+                return new WebPage(url, output);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
-
-        String input, output = "";
-        while ((input = reader.readLine()) != null) {
-            // System.out.println(input);
-            output = output.concat(input);
-        }
-
-        return new WebPage(url, output);
+        return null;
     }
 }
