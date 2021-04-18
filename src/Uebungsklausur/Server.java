@@ -10,7 +10,7 @@ public class Server {
 
             try {
                 PageCache cache = new PageCache();
-                cache.warmUp("src/UE2/web/demoURLs.txt");
+                cache.warmUp("src/Uebungsklausur/web/demoURLs.txt");
                 WebProxy wp = new WebProxy(cache);
 
                 ServerSocket serverSocket = new ServerSocket(5678);

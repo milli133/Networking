@@ -19,18 +19,18 @@ public class WebProxy {
         this.cache = cache;
     }
 
-    public WebPage fetch(String url) throws CacheMissException {
+    public WebPage fetch(String url) throws CacheMissException, IOException {
         try {
             WebPage site = cache.readFromCache(url);
             if (site != null) {
                 numCacheHits++;
                 return site;
-            } else
-                numCacheMisses++;
+            }
+        } catch (CacheMissException e) {
+            numCacheMisses++;
             return URLLoader.loadWebPage(url);
-        } catch (IOException e) {
-            throw new CacheMissException("ERROR", e);
         }
+        return null;
     }
 
     public String getNumCacheHits() {

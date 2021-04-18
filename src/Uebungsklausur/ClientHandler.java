@@ -33,10 +33,12 @@ public class ClientHandler implements Runnable {
                     command = splitReceived[0];
                     param = splitReceived[1];
 
-
                     switch (command) {
                         case "fetch", "Fetch":
-                            answer = wp.fetch(param).getContent();
+                            try {
+                                answer = wp.fetch(param).getContent();
+                            } catch (CacheMissException e) {
+                                System.out.println(e.getMessage()); }
                             break;
                         case "stats", "Stats":
                             answer = "Error: Command invalid!";
@@ -54,8 +56,9 @@ public class ClientHandler implements Runnable {
                 writer.newLine();
                 writer.flush();
             }
-        } catch (IOException | CacheMissException e) {
-            e.printStackTrace();
+            System.out.println("Connection terminated...");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

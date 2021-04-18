@@ -6,18 +6,18 @@ import java.io.*;
 import java.util.HashMap;
 
 public class PageCache {
-    private HashMap<String, WebPage> cache = new HashMap<String, WebPage>();
+    private HashMap<String, WebPage> cache = new HashMap<>();
 
     public HashMap<String, WebPage> getCache() {
         return cache;
     }
 
     public WebPage readFromCache(String url) throws CacheMissException {
-
         if (cache.containsKey(url))
             return cache.get(url);
-        else
+        else {
             throw new CacheMissException("URL Missing in Cache!");
+        }
     }
 
     public void writeToCache(WebPage webPage) {
@@ -34,7 +34,7 @@ public class PageCache {
             String line;
             int i = 0;
             while ((line = br.readLine()) != null) {
-                cache.put(line, URLLoader.loadWebPage(line));
+                writeToCache(URLLoader.loadWebPage(line));
                 System.out.println("Loaded: " + line);
             }
         } catch (IOException e) {
