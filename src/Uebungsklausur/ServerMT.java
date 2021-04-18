@@ -28,7 +28,7 @@ public class ServerMT {
                     System.out.println("Connection closed with " + client.getPort());
             }
         } catch (IOException e) {
-            System.out.println("Error while connecting...");;
+            System.out.println("Error while connecting...");
         }
     }
 }

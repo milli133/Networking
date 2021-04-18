@@ -51,7 +51,7 @@ public class WebProxy {
             }
             return true;
         } catch (IOException e) {
-            System.out.println("Something went wrong while writing to file...");;
+            System.out.println("Something went wrong while writing to file...");
             return false;
         }
     }

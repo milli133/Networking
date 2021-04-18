@@ -26,10 +26,10 @@ public class URLLoader {
 
                 return new WebPage(url, output);
             } catch (IOException e) {
-                System.out.println("Something went wrong while loading the webpage...");;
+                System.out.println("Something went wrong while loading the webpage...");
             }
         } catch (MalformedURLException e) {
-            System.out.println(e.getMessage());;
+            System.out.println(e.getMessage());
         }
         return null;
     }

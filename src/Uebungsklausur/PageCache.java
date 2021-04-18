@@ -32,13 +32,12 @@ public class PageCache {
             BufferedReader br = new BufferedReader(fr);
 
             String line;
-            int i = 0;
             while ((line = br.readLine()) != null) {
                 writeToCache(URLLoader.loadWebPage(line));
                 System.out.println("Loaded: " + line);
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong while loading from cache...");;
+            System.out.println("Something went wrong while loading from cache...");
         }
 
     }

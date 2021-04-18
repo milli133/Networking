@@ -1,7 +1,5 @@
 package Uebungsklausur;
 
-import Uebungsklausur.web.CacheMissException;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -22,7 +20,7 @@ public class ClientHandler implements Runnable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
-            String received, answer = "";
+            String received, answer;
 
             while (!(received = reader.readLine()).equalsIgnoreCase("bye")) {
                 if (!received.contains(" "))
