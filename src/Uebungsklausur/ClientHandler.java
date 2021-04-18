@@ -18,7 +18,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("Connection established...");
+            //System.out.println("Connection established...");
             BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
@@ -58,8 +58,8 @@ public class ClientHandler implements Runnable {
                 writer.flush();
             }
             System.out.println("Connection terminated...");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Something went wrong while reading client request...");
         }
     }
 }

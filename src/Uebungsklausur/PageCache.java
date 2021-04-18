@@ -38,7 +38,7 @@ public class PageCache {
                 System.out.println("Loaded: " + line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Something went wrong while loading from cache...");;
         }
 
     }
