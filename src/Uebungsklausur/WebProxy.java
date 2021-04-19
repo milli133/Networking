@@ -21,10 +21,13 @@ public class WebProxy {
     }
 
     public WebPage fetch(String url) throws URLLoaderException, IOException {
+
         WebPage site;
+
         try {
             site = cache.readFromCache(url);
             numCacheHits++;
+
         } catch (CacheMissException e) {
             System.out.println(e.getMessage());
             System.out.println("Caching: " + url);

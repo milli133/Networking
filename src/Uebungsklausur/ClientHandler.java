@@ -23,9 +23,10 @@ public class ClientHandler implements Runnable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
-            String received, answer;
+            String received, answer = "";
 
             while (!(received = reader.readLine()).equalsIgnoreCase("bye")) {
+
                 if (!received.contains(" "))
                     answer = "Error: Command invalid!";
                 else {
@@ -35,6 +36,7 @@ public class ClientHandler implements Runnable {
                     param = splitReceived[1];
 
                     switch (command) {
+
                         case "fetch", "Fetch":
                             try {
                                 answer = wp.fetch(param).getContent();
@@ -47,23 +49,22 @@ public class ClientHandler implements Runnable {
                             }
                             break;
                         case "stats", "Stats":
-                            answer = "Error: Command invalid!";
-
                             if (param.equalsIgnoreCase("hits"))
                                 answer = wp.getNumCacheHits();
                             if (param.equalsIgnoreCase("misses"))
                                 answer = wp.getNumCacheMisses();
                             break;
                         default:
-                            answer = "ERROR";
+                            answer = "Error: Command invalid!";
                     }
                 }
-                System.out.println("Sending " + answer + " to client");
+                System.out.println("Sending: '" + answer + "' to client");
                 writer.write(answer);
                 writer.newLine();
                 writer.flush();
             }
             System.out.println("Connection terminated...");
+
         } catch (Exception e) {
             System.out.println("Something went wrong while reading client request...");
         }

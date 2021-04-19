@@ -21,7 +21,6 @@ public class URLLoader {
             while ((input = reader.readLine()) != null) {
                 output = output.concat(input);
             }
-
             return new WebPage(url, output);
 
         } catch (Exception e) {
