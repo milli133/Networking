@@ -1,5 +1,8 @@
 package Uebungsklausur;
 
+import Uebungsklausur.web.CacheMissException;
+import Uebungsklausur.web.URLLoaderException;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -35,9 +38,13 @@ public class ClientHandler implements Runnable {
                         case "fetch", "Fetch":
                             try {
                                 answer = wp.fetch(param).getContent();
-                            } catch (Exception e) {
-                                answer = "Error: Cannot load webpage from URL";
-                                System.out.println(e.getMessage()); }
+                            }
+                            catch (URLLoaderException e) {
+                                answer = e.getMessage();
+                            }
+                            catch (Exception e) {
+                                answer = "Something went wrong while loading the webpage...";
+                            }
                             break;
                         case "stats", "Stats":
                             answer = "Error: Command invalid!";
@@ -47,7 +54,8 @@ public class ClientHandler implements Runnable {
                             if (param.equalsIgnoreCase("misses"))
                                 answer = wp.getNumCacheMisses();
                             break;
-                        default: answer = "ERROR";
+                        default:
+                            answer = "ERROR";
                     }
                 }
                 System.out.println("Sending " + answer + " to client");

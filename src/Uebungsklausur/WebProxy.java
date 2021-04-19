@@ -1,6 +1,7 @@
 package Uebungsklausur;
 
 import Uebungsklausur.web.CacheMissException;
+import Uebungsklausur.web.URLLoaderException;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,18 +20,20 @@ public class WebProxy {
         this.cache = cache;
     }
 
-    public WebPage fetch(String url) throws IOException {
+    public WebPage fetch(String url) throws URLLoaderException, IOException {
+        WebPage site;
         try {
-            WebPage site = cache.readFromCache(url);
-            if (site != null) {
-                numCacheHits++;
-                return site;
-            }
+            site = cache.readFromCache(url);
+            numCacheHits++;
         } catch (CacheMissException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Caching: " + url);
+            site =  URLLoader.loadWebPage(url);
+            cache.writeToCache(site);
             numCacheMisses++;
-            return URLLoader.loadWebPage(url);
+
         }
-        return null;
+        return site;
     }
 
     public String getNumCacheHits() {
