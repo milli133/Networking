@@ -1,6 +1,5 @@
 package Uebungsklausur;
 
-import Uebungsklausur.web.CacheMissException;
 import Uebungsklausur.web.URLLoaderException;
 
 import java.io.*;
@@ -12,16 +11,17 @@ public class ClientHandler implements Runnable {
     private WebProxy wp;
 
     public ClientHandler(Socket client, WebProxy proxy) {
+
         this.client = client;
         this.wp = proxy;
     }
 
     @Override
     public void run() {
-        try {
+
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()))){
             //System.out.println("Connection established...");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
             String received, answer = "";
 
@@ -42,9 +42,6 @@ public class ClientHandler implements Runnable {
                                 answer = wp.fetch(param).getContent();
                             }
                             catch (URLLoaderException e) {
-                                answer = e.getMessage();
-                            }
-                            catch (Exception e) {
                                 answer = "Something went wrong while loading the webpage...";
                             }
                             break;

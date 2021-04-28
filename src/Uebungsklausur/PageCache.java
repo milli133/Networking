@@ -14,6 +14,7 @@ public class PageCache {
     }
 
     public WebPage readFromCache(String url) throws CacheMissException {
+
         if (cache.containsKey(url))
             return cache.get(url);
         else {
@@ -26,17 +27,19 @@ public class PageCache {
     }
 
     public void warmUp(String pathToURLs) {
-        try {
-            File file = new File(pathToURLs);
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+
+        File file = new File(pathToURLs);
+
+        try (
+                FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr)) {
 
             String line;
             while ((line = br.readLine()) != null) {
                 writeToCache(URLLoader.loadWebPage(line));
                 System.out.println("Loaded: " + line);
             }
-        } catch (IOException | URLLoaderException e) {
+        } catch (Exception e) {
             System.out.println("Something went wrong while warming up the cache...");
         }
 

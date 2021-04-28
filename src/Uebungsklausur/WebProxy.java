@@ -20,21 +20,19 @@ public class WebProxy {
         this.cache = cache;
     }
 
-    public WebPage fetch(String url) throws URLLoaderException, IOException {
+    public WebPage fetch(String url) throws URLLoaderException {
 
         WebPage site;
 
         try {
             site = cache.readFromCache(url);
             numCacheHits++;
-
         } catch (CacheMissException e) {
             System.out.println(e.getMessage());
-            System.out.println("Caching: " + url);
+            System.out.println("Caching: " + url + "...");
             site =  URLLoader.loadWebPage(url);
             cache.writeToCache(site);
             numCacheMisses++;
-
         }
         return site;
     }
@@ -47,9 +45,9 @@ public class WebProxy {
         return "Stat misses: " + numCacheMisses;
     }
 
-    public boolean writePageToCache(String pathToFile) {
-        try {
-            FileWriter writer = new FileWriter(pathToFile);
+    public boolean writePageCacheToFile(String pathToFile) {
+
+        try (FileWriter writer = new FileWriter(pathToFile)){
 
             for (Map.Entry<String, WebPage> mapEntry : cache.getCache().entrySet()) {
                 writer.write(mapEntry.getKey() + ";" + mapEntry.getValue().getContent());
